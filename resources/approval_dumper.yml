@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: dumper
+  name: approval-db-dump
+spec:
+  containers:
+  - image: quay.io/jlindgren/insights-rds-db-dump-container:latest
+    env:
+    - name: DATABASE_NAME
+      value: approval_production
+    - name: DATABASE_USER
+      valueFrom:
+        secretKeyRef:
+          key: username
+          name: approval-db
+    - name: DATABASE_HOST
+      valueFrom:
+        secretKeyRef:
+          key: hostname
+          name: approval-db
+    - name: DATABASE_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: password
+          name: approval-db
+    imagePullPolicy: Always
+    name: approval-db-dump
+status: {}

@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: dumper
+  name: catalog-db-dump
+spec:
+  containers:
+  - image: quay.io/jlindgren/insights-rds-db-dump-container:latest
+    env:
+    - name: DATABASE_NAME
+      value: catalog_production
+    - name: DATABASE_USER
+      valueFrom:
+        secretKeyRef:
+          key: username
+          name: catalog-db
+    - name: DATABASE_HOST
+      valueFrom:
+        secretKeyRef:
+          key: hostname
+          name: catalog-db
+    - name: DATABASE_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: password
+          name: catalog-db
+    imagePullPolicy: Always
+    name: catalog-db-dump
+status: {}
