@@ -18,6 +18,6 @@ puts "Copying #{path} from catalog-db-dump down..."
 system("#{RUNNER} cp catalog-db-dump:#{path} ./#{path.sub('/tmp/', '')}")
 
 puts 'Deleting dump pod...'
-system("#{RUNNER} delete -f #{__dir__}/resources/catalog_dumper.yml")
+system("#{RUNNER} delete --wait=false -f #{__dir__}/resources/catalog_dumper.yml")
 
 puts "Database dump complete. To restore run: 'ruby restore_db.rb ./#{path.sub('/tmp/', '')}'"

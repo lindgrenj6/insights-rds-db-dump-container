@@ -21,6 +21,6 @@ puts 'Restoring db...'
 system("#{RUNNER} exec -it approval-db-restore -- /bin/restore_db.sh #{ARGV.first}")
 
 puts 'Deleting restore pod...'
-system("#{RUNNER} delete -f #{__dir__}/resources/approval_restorer.yml")
+system("#{RUNNER} delete --wait=false -f #{__dir__}/resources/approval_restorer.yml")
 
 puts 'Database restored.'

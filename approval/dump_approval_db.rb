@@ -18,6 +18,6 @@ puts "Copying #{path} from approval-db-dump down..."
 system("#{RUNNER} cp approval-db-dump:#{path} ./#{path.sub('/tmp/', '')}")
 
 puts 'Deleting dump pod...'
-system("#{RUNNER} delete -f #{__dir__}/resources/approval_dumper.yml")
+system("#{RUNNER} delete --wait=false -f #{__dir__}/resources/approval_dumper.yml")
 
 puts "Database dump complete. To restore run: 'ruby restore_approval_db.rb ./#{path.sub('/tmp/', '')}'"
