@@ -6,7 +6,7 @@ RUNNER = 'kubectl' # change to oc if that is what you use.
 raise 'Wrong project, change your oc project to `catalog-prod`' unless `#{RUNNER} config current-context`.match?(/^catalog-prod.*/)
 raise 'dump file required as first argument' unless ARGV.first
 
-system("#{RUNNER} create -f ./resources/catalog_restorer.yml")
+system("#{RUNNER} create -f #{__dir__}/resources/catalog_restorer.yml")
 
 until `#{RUNNER} get pod -l app=restorer --no-headers | wc -l`.to_i == 1
   puts 'Database restore pod still baking, waiting 5s...'
@@ -21,6 +21,6 @@ puts 'Restoring db...'
 system("#{RUNNER} exec -it catalog-db-restore -- /bin/restore_db.sh #{ARGV.first}")
 
 puts 'Deleting restore pod...'
-system("#{RUNNER} delete -f ./resources/catalog_restorer.yml")
+system("#{RUNNER} delete -f #{__dir__}/resources/catalog_restorer.yml")
 
 puts 'Database restored.'
