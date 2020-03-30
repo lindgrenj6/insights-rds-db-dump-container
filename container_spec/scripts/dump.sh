@@ -7,6 +7,7 @@ pg_dump \
     --host $DATABASE_HOST \
     --dbname $DATABASE_NAME \
     --username $DATABASE_USER \
+    --clean \
     | gzip > $DUMP_NAME
 
 echo "Ding! Your dump is ready at: $DUMP_NAME"

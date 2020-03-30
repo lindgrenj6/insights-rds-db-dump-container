@@ -8,7 +8,7 @@ raise 'dump file required as first argument' unless ARGV.first
 
 system("#{RUNNER} create -f #{__dir__}/resources/approval_restorer.yml")
 
-until `#{RUNNER} get pod -l app=restorer --no-headers | wc -l`.to_i == 1
+until `#{RUNNER} get pod -l app=restorer --no-headers | grep Running -i | wc -l`.to_i == 1
   puts 'Database restore pod still baking, waiting 5s...'
   sleep 5
 end
@@ -18,7 +18,7 @@ puts "Copying #{path} up to approval-db-restore..."
 system("#{RUNNER} cp #{path} approval-db-restore:/tmp/#{path}")
 
 puts 'Restoring db...'
-system("#{RUNNER} exec -it approval-db-restore -- /bin/restore_db.sh #{ARGV.first}")
+system("#{RUNNER} exec -it approval-db-restore -- /bin/restore.sh /tmp/#{ARGV.first}")
 
 puts 'Deleting restore pod...'
 system("#{RUNNER} delete --wait=false -f #{__dir__}/resources/approval_restorer.yml")
