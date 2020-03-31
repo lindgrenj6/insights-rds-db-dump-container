@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 export PGPASSWORD=$DATABASE_PASSWORD 
-export DUMP_NAME=/tmp/${DATABASE_NAME}-$(date +%s).sql.gz
+export DUMP_NAME=/tmp/${DATABASE_NAME}-$(date +%m-%d-%Y).sql.gz
 
 pg_dump \
     --host $DATABASE_HOST \
